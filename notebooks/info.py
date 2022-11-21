@@ -1,5 +1,5 @@
 import cv2 as cv
-import numpy as np
+import SimpleITK as sitk
 from pathlib import Path
 import pandas as pd
 
@@ -42,7 +42,11 @@ class patient(path_label): #inherit from path_label path and seg functions
     def __init__(self, info = path_label(), num=0) -> None:
         self.meta = info.meta.iloc[[num]] #get metadata of patient by absolute index
         
-    def im(self, sequence, t = 't1'):
+    def im_array(self, sequence, t = 't1'):
         path = self.im_path(sequence, t)
-        im = cv.imread(str(repo_path) + '/' + path[0])
+        im = cv.imread(str(repo_path) + '/' + path[0], cv.IMREAD_UNCHANGED)
+        return im
+    def im_sitk(self, sequence, t = 't1'):
+        path = self.im_path(sequence, t)
+        im = sitk.ReadImage(str(repo_path) + '/' + path[0])
         return im
