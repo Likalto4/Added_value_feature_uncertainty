@@ -12,14 +12,30 @@ class path_label():
     """
     def __init__(self, meta=pd.read_csv(str(repo_path) + '/data/metadata.csv', sep=',')) -> None:
         self.meta = meta
-        self.paths_SET = list(meta.path_SET)
+        #self.paths_SET = list(meta.path_SET)
         self.pat_num = list(meta.pat_num)
         self.len = len(self.pat_num)
     
     def seg(self, rad, time, stype):
+        """get path of segmentation given the radiologist, the time and the segmentation type
+
+        Args:
+            rad (str): Lily, Vyanka or Martha
+            time (str): 1 or 2
+            stype (str): global or focal
+
+        Returns:
+            list: paths of segmentation
+        """
         seg_name = f'{rad}_{time}_{stype}'
         paths = getattr(self.meta, seg_name)
         return list(paths)
+    
+    def path(self, sequence, t = 't1'):
+        im_seq = f'path_{sequence}_{t}' if sequence=='CMC' else f'path_{sequence}'
+        paths = getattr(self.meta, im_seq)
+        return list(paths)
+
         
 # #create class to call patient and its information
 # class patient():
