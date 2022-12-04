@@ -2,21 +2,22 @@ import cv2 as cv
 import SimpleITK as sitk
 from pathlib import Path
 import pandas as pd
+import numpy as np
 
 subnotebooks = Path.cwd()
 notebooks_path = subnotebooks.parent
 repo_path = notebooks_path.parent
 
 class path_label():
-    """Class to access paths and labels from csv
+    """Class to access generla info (paths and labels) from csv of ALL PATIENTS
     """
     def __init__(self, meta=pd.read_csv(str(repo_path) + '/data/metadata.csv', sep=',')) -> None:
         self.meta = meta
         self.pat_num = list(meta.pat_num)
         self.len = len(self.pat_num)
     
-    def seg(self, rad, time, stype):
-        """get path of segmentation given the radiologist, the time and the segmentation type
+    def seg_path(self, rad, time, stype):
+        """get paths list of segmentation given the radiologist, the time and the segmentation type
 
         Args:
             rad (str): Lily, Vyanka or Martha
@@ -41,10 +42,11 @@ class patient(path_label): #inherit from path_label path and seg functions
     """
     def __init__(self, info = path_label(), num=0) -> None:
         self.meta = info.meta.iloc[[num]] #get metadata of patient by absolute index
+        self.pat_num = self.meta.pat_num.values[0] #get patient number
         
     def im_array(self, sequence, t = 't1'):
         path = self.im_path(sequence, t)
-        im = cv.imread(str(repo_path) + '/' + path[0], cv.IMREAD_UNCHANGED)
+        im = cv.imread(str(repo_path) + '/' + path[0], cv.IMREAD_UNCHANGED) #keep image original format unchanged
         return im
     def im_sitk(self, sequence, t = 't1'):
         path = self.im_path(sequence, t)

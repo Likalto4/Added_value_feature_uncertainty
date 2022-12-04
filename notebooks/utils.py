@@ -1,10 +1,38 @@
-import cv2 as cv
-import numpy as np
 from pathlib import Path
-import pandas as pd
+import numpy as np
+import SimpleITK as sitk
 
 subnotebooks = Path.cwd()
 notebooks_path = subnotebooks.parent
 repo_path = notebooks_path.parent
 
-#function to show
+def min_max(im_array, show=False):
+    """Get min and max values of an image
+
+    Args:
+        im_array (np.array): image array
+        show (bool, optional): show min and max values. Defaults to False.
+
+    Returns:
+        tuple: min and max values
+    """
+    min_val = np.min(im_array)
+    max_val = np.max(im_array)
+    if show:
+        print(f'Min: {min_val}, Max: {max_val}')
+    return min_val, max_val
+
+def save_as_nifti(array, filename, reference_image):
+    """Save array as nifti image
+
+    Args:
+        array (array): array to be saved
+        filename (str): path to save
+        reference_image (str): path of reference image
+    """
+    reference_image = sitk.ReadImage(reference_image)
+    image = sitk.GetImageFromArray(array)
+    image.SetOrigin(reference_image.GetOrigin())
+    image.SetSpacing(reference_image.GetSpacing())
+    image.SetDirection(reference_image.GetDirection())
+    sitk.WriteImage(image, filename)
