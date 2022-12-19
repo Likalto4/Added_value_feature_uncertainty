@@ -22,7 +22,7 @@ def min_max(im_array, show=False):
         print(f'Min: {min_val}, Max: {max_val}')
     return min_val, max_val
 
-def save_as_nifti(array, filename, reference_image):
+def save_as_nifti(array, filename, reference_path):
     """Save array as nifti image
 
     Args:
@@ -30,7 +30,7 @@ def save_as_nifti(array, filename, reference_image):
         filename (str): path to save
         reference_image (str): path of reference image
     """
-    reference_image = sitk.ReadImage(reference_image)
+    reference_image = sitk.ReadImage(reference_path)
     image = sitk.GetImageFromArray(array)
     image.SetOrigin(reference_image.GetOrigin())
     image.SetSpacing(reference_image.GetSpacing())
