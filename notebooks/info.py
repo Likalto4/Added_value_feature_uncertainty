@@ -9,9 +9,14 @@ notebooks_path = subnotebooks.parent
 repo_path = notebooks_path.parent
 
 class path_label():
-    """Class to access generla info (paths and labels) from csv of ALL PATIENTS
+    """Class to access general info (paths and labels) from csv of ALL PATIENTS
     """
     def __init__(self, meta=pd.read_csv(str(repo_path) + '/data/metadata.csv', sep=',')) -> None:
+        """only need the metadata csv file to define the object
+
+        Args:
+            meta (pd.Dataframe, optional): dataframe with the metadata. Defaults to pd.read_csv(str(repo_path) + '/data/metadata.csv', sep=',').
+        """
         self.meta = meta
         self.pat_num = list(meta.pat_num)
         self.len = len(self.pat_num)
