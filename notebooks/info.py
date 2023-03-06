@@ -2,7 +2,6 @@ import cv2 as cv
 import SimpleITK as sitk
 from pathlib import Path
 import pandas as pd
-import numpy as np
 
 subnotebooks = Path.cwd()
 notebooks_path = subnotebooks.parent
@@ -21,7 +20,7 @@ class path_label():
         self.pat_num = list(meta.pat_num)
         self.len = len(self.pat_num)
     
-    def seg_path(self, rad, time, stype):
+    def seg_path(self, rad: str, time: int, stype: str):
         """get paths list of segmentation given the radiologist, the time and the segmentation type
 
         Args:
@@ -36,7 +35,16 @@ class path_label():
         paths = getattr(self.meta, seg_name)
         return list(paths)
     
-    def im_path(self, sequence, t = 't1'):
+    def im_path(self, sequence: str, t = 't1'):
+        """gets the image paths of the current meta dataframe
+
+        Args:
+            sequence (str): SMC, CMC or SET
+            t (str, optional): Only for CMC (and SET). Defaults to 't1'.
+
+        Returns:
+            list: list with the paths of the images
+        """
         im_seq = f'path_{sequence}_{t}' if sequence=='CMC' else f'path_{sequence}'
         paths = getattr(self.meta, im_seq)
         return list(paths)
