@@ -36,3 +36,8 @@ def save_as_nifti(array, filename, reference_path):
     image.SetSpacing(reference_image.GetSpacing())
     image.SetDirection(reference_image.GetDirection())
     sitk.WriteImage(image, filename)
+
+def GetArrayFromPath(im_path):
+    im_sitk = sitk.ReadImage(str(im_path))
+    im_np = sitk.GetArrayFromImage(im_sitk)
+    return im_np

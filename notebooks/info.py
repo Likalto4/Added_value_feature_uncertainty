@@ -19,6 +19,9 @@ class path_label():
         self.meta = meta
         self.pat_num = list(meta.pat_num)
         self.len = len(self.pat_num)
+
+    def __repr__(self) -> str:
+        return f'path_label object with {self.len} patients'
     
     def seg_path(self, rad: str, time: int, stype: str):
         """get paths list of segmentation given the radiologist, the time and the segmentation type
@@ -62,6 +65,9 @@ class patient(path_label): #inherit from path_label path and seg functions
         """
         self.meta = info.meta.iloc[[num]] #get metadata of patient by absolute index
         self.pat_num = self.meta.pat_num.values[0] #get patient number
+
+    def __repr__(self) -> str:
+        return f'patient {self.pat_num}'
         
     def im_array(self, sequence, t = 't1'):
         """get image as array, given the sequence and time
