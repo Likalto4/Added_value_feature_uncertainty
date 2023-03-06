@@ -51,6 +51,17 @@ class path_label():
         im_seq = f'path_{sequence}_{t}' if sequence=='CMC' else f'path_{sequence}'
         paths = getattr(self.meta, im_seq)
         return list(paths)
+    def labels_list(self, receptor: str):
+        """get labels of the patients
+
+        Args:
+            receptor (str): 'ER', 'PR' or 'HER2'
+
+        Returns:
+            list: list with labels of the patients
+        """
+        labels = getattr(self.meta, receptor)
+        return list(labels)
       
 #create class to call patient and its information
 class patient(path_label): #inherit from path_label path and seg functions
@@ -95,3 +106,14 @@ class patient(path_label): #inherit from path_label path and seg functions
         path = self.im_path(sequence, t)
         im = sitk.ReadImage(str(repo_path) + '/' + path[0])
         return im
+    def label(self, receptor: str):
+        """get label of the patient
+
+        Args:
+            receptor (str): 'ER', 'PR' or 'HER2'
+
+        Returns:
+            int: label of the patient
+        """
+        label = getattr(self.meta, receptor)
+        return label.values[0]
