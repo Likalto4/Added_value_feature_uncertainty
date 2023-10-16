@@ -1,7 +1,7 @@
 ,0
 shape2D_Elongation,[]
-shape2D_MajorAxisLength,['shape2D_MaximumDiameter']
-shape2D_MaximumDiameter,['shape2D_MajorAxisLength']
+shape2D_MajorAxisLength,[]
+shape2D_MaximumDiameter,[]
 shape2D_MeshSurface,"['shape2D_PixelSurface', 'firstorder_Energy', 'firstorder_TotalEnergy', 'glrlm_RunLengthNonUniformity']"
 shape2D_MinorAxisLength,[]
 shape2D_Perimeter,[]
@@ -11,7 +11,7 @@ shape2D_Sphericity,[]
 firstorder_10Percentile,[]
 firstorder_90Percentile,[]
 firstorder_Energy,"['shape2D_MeshSurface', 'shape2D_PixelSurface', 'glrlm_RunLengthNonUniformity']"
-firstorder_Entropy,"['firstorder_Uniformity', 'glszm_GrayLevelNonUniformityNormalized', 'glrlm_GrayLevelNonUniformityNormalized']"
+firstorder_Entropy,['glszm_GrayLevelNonUniformityNormalized']
 firstorder_InterquartileRange,"['firstorder_MeanAbsoluteDeviation', 'firstorder_RobustMeanAbsoluteDeviation']"
 firstorder_Kurtosis,[]
 firstorder_Maximum,[]
@@ -24,79 +24,79 @@ firstorder_RobustMeanAbsoluteDeviation,"['firstorder_InterquartileRange', 'first
 firstorder_RootMeanSquared,"['firstorder_Mean', 'firstorder_Median']"
 firstorder_Skewness,[]
 firstorder_TotalEnergy,"['shape2D_MeshSurface', 'shape2D_PixelSurface', 'glrlm_RunLengthNonUniformity']"
-firstorder_Uniformity,"['firstorder_Entropy', 'glszm_GrayLevelNonUniformityNormalized', 'glrlm_GrayLevelNonUniformityNormalized']"
+firstorder_Uniformity,"['glszm_GrayLevelNonUniformityNormalized', 'glrlm_GrayLevelNonUniformityNormalized']"
 firstorder_Variance,[]
-glcm_Autocorrelation,"['glcm_JointAverage', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'gldm_HighGrayLevelEmphasis']"
+glcm_Autocorrelation,"['glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'gldm_HighGrayLevelEmphasis']"
 glcm_ClusterProminence,[]
 glcm_ClusterTendency,[]
-glcm_Contrast,"['glcm_DifferenceAverage', 'glcm_DifferenceVariance', 'glcm_Idmn', 'glcm_Idn']"
+glcm_Contrast,"['glcm_DifferenceVariance', 'glcm_Idmn']"
 glcm_Correlation,[]
-glcm_DifferenceAverage,"['glcm_Contrast', 'glcm_DifferenceEntropy', 'glcm_DifferenceVariance', 'glcm_Idmn', 'glcm_Idn', 'gldm_DependenceNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
-glcm_DifferenceEntropy,"['glcm_DifferenceAverage', 'glcm_Id', 'glcm_Idm', 'glcm_Idn', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'gldm_DependenceNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
-glcm_DifferenceVariance,"['glcm_Contrast', 'glcm_DifferenceAverage', 'glcm_Idmn', 'glcm_Idn']"
-glcm_Id,"['glcm_DifferenceEntropy', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_SmallDependenceEmphasis']"
-glcm_Idm,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis', 'gldm_SmallDependenceEmphasis']"
-glcm_Idmn,"['glcm_Contrast', 'glcm_DifferenceAverage', 'glcm_DifferenceVariance', 'glcm_Idn', 'gldm_DependenceNonUniformityNormalized']"
-glcm_Idn,"['glcm_Contrast', 'glcm_DifferenceAverage', 'glcm_DifferenceEntropy', 'glcm_DifferenceVariance', 'glcm_Idmn', 'glszm_SizeZoneNonUniformityNormalized', 'gldm_DependenceNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
+glcm_DifferenceAverage,"['glcm_Idmn', 'glcm_Idn', 'gldm_DependenceNonUniformityNormalized']"
+glcm_DifferenceEntropy,"['glcm_Id', 'glcm_Idn', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'gldm_DependenceNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
+glcm_DifferenceVariance,"['glcm_Contrast', 'glcm_Idmn']"
+glcm_Id,"['glcm_DifferenceEntropy', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis', 'gldm_SmallDependenceEmphasis']"
+glcm_Idm,"['glcm_Id', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance']"
+glcm_Idmn,"['glcm_Contrast', 'glcm_DifferenceAverage', 'glcm_DifferenceVariance']"
+glcm_Idn,"['glcm_DifferenceAverage', 'glcm_DifferenceEntropy', 'gldm_DependenceNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
 glcm_Imc1,[]
 glcm_Imc2,[]
-glcm_InverseVariance,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis', 'gldm_SmallDependenceEmphasis']"
-glcm_JointAverage,"['glcm_Autocorrelation', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'glrlm_ShortRunHighGrayLevelEmphasis', 'gldm_HighGrayLevelEmphasis']"
+glcm_InverseVariance,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance']"
+glcm_JointAverage,"['glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'gldm_HighGrayLevelEmphasis']"
 glcm_JointEnergy,['glcm_MaximumProbability']
 glcm_JointEntropy,[]
 glcm_MCC,[]
 glcm_MaximumProbability,['glcm_JointEnergy']
-glcm_SumAverage,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'glrlm_ShortRunHighGrayLevelEmphasis', 'gldm_HighGrayLevelEmphasis']"
+glcm_SumAverage,"['glcm_JointAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'gldm_HighGrayLevelEmphasis']"
 glcm_SumEntropy,[]
 glcm_SumSquares,"['glszm_GrayLevelVariance', 'glrlm_GrayLevelVariance', 'gldm_GrayLevelVariance']"
 glszm_GrayLevelNonUniformity,"['glrlm_GrayLevelNonUniformity', 'gldm_GrayLevelNonUniformity']"
 glszm_GrayLevelNonUniformityNormalized,"['firstorder_Entropy', 'firstorder_Uniformity', 'glrlm_GrayLevelNonUniformityNormalized']"
 glszm_GrayLevelVariance,"['glcm_SumSquares', 'glrlm_GrayLevelVariance', 'gldm_GrayLevelVariance']"
-glszm_HighGrayLevelZoneEmphasis,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glcm_SumAverage', 'glrlm_HighGrayLevelRunEmphasis', 'glrlm_ShortRunHighGrayLevelEmphasis', 'gldm_HighGrayLevelEmphasis']"
-glszm_LargeAreaEmphasis,"['glszm_ZoneVariance', 'gldm_LargeDependenceEmphasis']"
-glszm_LargeAreaHighGrayLevelEmphasis,['gldm_LargeDependenceHighGrayLevelEmphasis']
-glszm_LargeAreaLowGrayLevelEmphasis,['gldm_LargeDependenceLowGrayLevelEmphasis']
+glszm_HighGrayLevelZoneEmphasis,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glcm_SumAverage', 'glrlm_HighGrayLevelRunEmphasis', 'gldm_HighGrayLevelEmphasis']"
+glszm_LargeAreaEmphasis,['glszm_ZoneVariance']
+glszm_LargeAreaHighGrayLevelEmphasis,[]
+glszm_LargeAreaLowGrayLevelEmphasis,[]
 glszm_LowGrayLevelZoneEmphasis,"['glrlm_LowGrayLevelRunEmphasis', 'glrlm_ShortRunLowGrayLevelEmphasis', 'gldm_LowGrayLevelEmphasis']"
-glszm_SizeZoneNonUniformity,"['ngtdm_Busyness', 'gldm_DependenceNonUniformity']"
-glszm_SizeZoneNonUniformityNormalized,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glcm_Idn', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis', 'gldm_DependenceNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
-glszm_SmallAreaEmphasis,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_SmallDependenceEmphasis']"
+glszm_SizeZoneNonUniformity,['gldm_DependenceNonUniformity']
+glszm_SizeZoneNonUniformityNormalized,"['glcm_DifferenceEntropy', 'glcm_Id', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
+glszm_SmallAreaEmphasis,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis']"
 glszm_SmallAreaHighGrayLevelEmphasis,[]
-glszm_SmallAreaLowGrayLevelEmphasis,['glrlm_ShortRunLowGrayLevelEmphasis']
-glszm_ZoneEntropy,['gldm_DependenceEntropy']
-glszm_ZonePercentage,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis', 'gldm_SmallDependenceEmphasis']"
+glszm_SmallAreaLowGrayLevelEmphasis,[]
+glszm_ZoneEntropy,[]
+glszm_ZonePercentage,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis']"
 glszm_ZoneVariance,['glszm_LargeAreaEmphasis']
 glrlm_GrayLevelNonUniformity,"['glszm_GrayLevelNonUniformity', 'gldm_GrayLevelNonUniformity']"
-glrlm_GrayLevelNonUniformityNormalized,"['firstorder_Entropy', 'firstorder_Uniformity', 'glszm_GrayLevelNonUniformityNormalized']"
+glrlm_GrayLevelNonUniformityNormalized,"['firstorder_Uniformity', 'glszm_GrayLevelNonUniformityNormalized']"
 glrlm_GrayLevelVariance,"['glcm_SumSquares', 'glszm_GrayLevelVariance', 'gldm_GrayLevelVariance']"
-glrlm_HighGrayLevelRunEmphasis,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_ShortRunHighGrayLevelEmphasis', 'gldm_HighGrayLevelEmphasis']"
-glrlm_LongRunEmphasis,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis']"
+glrlm_HighGrayLevelRunEmphasis,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'gldm_HighGrayLevelEmphasis']"
+glrlm_LongRunEmphasis,"['glcm_Idm', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis']"
 glrlm_LongRunHighGrayLevelEmphasis,[]
 glrlm_LongRunLowGrayLevelEmphasis,[]
 glrlm_LowGrayLevelRunEmphasis,"['glszm_LowGrayLevelZoneEmphasis', 'glrlm_ShortRunLowGrayLevelEmphasis', 'gldm_LowGrayLevelEmphasis']"
 glrlm_RunEntropy,[]
-glrlm_RunLengthNonUniformity,"['shape2D_MeshSurface', 'shape2D_PixelSurface', 'firstorder_Energy', 'firstorder_TotalEnergy', 'gldm_DependenceNonUniformity']"
-glrlm_RunLengthNonUniformityNormalized,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis', 'gldm_SmallDependenceEmphasis']"
-glrlm_RunPercentage,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis']"
-glrlm_RunVariance,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis']"
-glrlm_ShortRunEmphasis,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis']"
-glrlm_ShortRunHighGrayLevelEmphasis,"['glcm_JointAverage', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'gldm_HighGrayLevelEmphasis']"
-glrlm_ShortRunLowGrayLevelEmphasis,"['glszm_LowGrayLevelZoneEmphasis', 'glszm_SmallAreaLowGrayLevelEmphasis', 'glrlm_LowGrayLevelRunEmphasis', 'gldm_LowGrayLevelEmphasis']"
-ngtdm_Busyness,"['glszm_SizeZoneNonUniformity', 'gldm_DependenceNonUniformity']"
+glrlm_RunLengthNonUniformity,"['shape2D_MeshSurface', 'shape2D_PixelSurface', 'firstorder_Energy', 'firstorder_TotalEnergy']"
+glrlm_RunLengthNonUniformityNormalized,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis']"
+glrlm_RunPercentage,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance']"
+glrlm_RunVariance,"['glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance', 'gldm_LargeDependenceEmphasis']"
+glrlm_ShortRunEmphasis,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'gldm_DependenceVariance']"
+glrlm_ShortRunHighGrayLevelEmphasis,[]
+glrlm_ShortRunLowGrayLevelEmphasis,"['glszm_LowGrayLevelZoneEmphasis', 'glrlm_LowGrayLevelRunEmphasis', 'gldm_LowGrayLevelEmphasis']"
+ngtdm_Busyness,[]
 ngtdm_Coarseness,[]
 ngtdm_Complexity,[]
 ngtdm_Contrast,[]
 ngtdm_Strength,[]
-gldm_DependenceEntropy,['glszm_ZoneEntropy']
-gldm_DependenceNonUniformity,"['glszm_SizeZoneNonUniformity', 'glrlm_RunLengthNonUniformity', 'ngtdm_Busyness']"
-gldm_DependenceNonUniformityNormalized,"['glcm_DifferenceAverage', 'glcm_DifferenceEntropy', 'glcm_Idmn', 'glcm_Idn', 'glszm_SizeZoneNonUniformityNormalized', 'gldm_SmallDependenceEmphasis']"
-gldm_DependenceVariance,"['glcm_Id', 'glcm_Idm', 'glcm_InverseVariance', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_LargeDependenceEmphasis']"
+gldm_DependenceEntropy,[]
+gldm_DependenceNonUniformity,['glszm_SizeZoneNonUniformity']
+gldm_DependenceNonUniformityNormalized,"['glcm_DifferenceAverage', 'glcm_DifferenceEntropy', 'glcm_Idn', 'gldm_SmallDependenceEmphasis']"
+gldm_DependenceVariance,"['glcm_Idm', 'glcm_InverseVariance', 'glrlm_LongRunEmphasis', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_LargeDependenceEmphasis']"
 gldm_GrayLevelNonUniformity,"['glszm_GrayLevelNonUniformity', 'glrlm_GrayLevelNonUniformity']"
 gldm_GrayLevelVariance,"['glcm_SumSquares', 'glszm_GrayLevelVariance', 'glrlm_GrayLevelVariance']"
-gldm_HighGrayLevelEmphasis,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis', 'glrlm_ShortRunHighGrayLevelEmphasis']"
-gldm_LargeDependenceEmphasis,"['glcm_Idm', 'glcm_InverseVariance', 'glszm_LargeAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_LongRunEmphasis', 'glrlm_RunLengthNonUniformityNormalized', 'glrlm_RunPercentage', 'glrlm_RunVariance', 'glrlm_ShortRunEmphasis', 'gldm_DependenceVariance']"
-gldm_LargeDependenceHighGrayLevelEmphasis,['glszm_LargeAreaHighGrayLevelEmphasis']
-gldm_LargeDependenceLowGrayLevelEmphasis,['glszm_LargeAreaLowGrayLevelEmphasis']
+gldm_HighGrayLevelEmphasis,"['glcm_Autocorrelation', 'glcm_JointAverage', 'glcm_SumAverage', 'glszm_HighGrayLevelZoneEmphasis', 'glrlm_HighGrayLevelRunEmphasis']"
+gldm_LargeDependenceEmphasis,"['glrlm_LongRunEmphasis', 'glrlm_RunVariance', 'gldm_DependenceVariance']"
+gldm_LargeDependenceHighGrayLevelEmphasis,[]
+gldm_LargeDependenceLowGrayLevelEmphasis,[]
 gldm_LowGrayLevelEmphasis,"['glszm_LowGrayLevelZoneEmphasis', 'glrlm_LowGrayLevelRunEmphasis', 'glrlm_ShortRunLowGrayLevelEmphasis']"
-gldm_SmallDependenceEmphasis,"['glcm_DifferenceAverage', 'glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idm', 'glcm_Idn', 'glcm_InverseVariance', 'glszm_SizeZoneNonUniformityNormalized', 'glszm_SmallAreaEmphasis', 'glszm_ZonePercentage', 'glrlm_RunLengthNonUniformityNormalized', 'gldm_DependenceNonUniformityNormalized']"
+gldm_SmallDependenceEmphasis,"['glcm_DifferenceEntropy', 'glcm_Id', 'glcm_Idn', 'glszm_SizeZoneNonUniformityNormalized', 'gldm_DependenceNonUniformityNormalized']"
 gldm_SmallDependenceHighGrayLevelEmphasis,[]
 gldm_SmallDependenceLowGrayLevelEmphasis,[]
