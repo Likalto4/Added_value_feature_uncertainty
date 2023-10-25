@@ -1,11 +1,13 @@
+from pathlib import Path
+import os, sys
+repo_path= Path.cwd().resolve()
+while '.gitignore' not in os.listdir(repo_path): # while not in the root of the repo
+    repo_path = repo_path.parent #go up one level
+sys.path.insert(0,str(repo_path)) if str(repo_path) not in sys.path else None
+
 import cv2 as cv
 import SimpleITK as sitk
-from pathlib import Path
 import pandas as pd
-
-subnotebooks = Path.cwd()
-notebooks_path = subnotebooks.parent
-repo_path = notebooks_path.parent
 
 class path_label():
     """Class to access general info (paths and labels) from csv of ALL PATIENTS
@@ -51,6 +53,17 @@ class path_label():
         im_seq = f'path_{sequence}_{t}' if sequence=='CMC' else f'path_{sequence}'
         paths = getattr(self.meta, im_seq)
         return list(paths)
+    def labels_list(self, receptor: str):
+        """get labels of the patients
+
+        Args:
+            receptor (str): 'ER', 'PR' or 'HER2'
+
+        Returns:
+            list: list with labels of the patients
+        """
+        labels = getattr(self.meta, receptor)
+        return list(labels)
       
 #create class to call patient and its information
 class patient(path_label): #inherit from path_label path and seg functions
@@ -95,3 +108,14 @@ class patient(path_label): #inherit from path_label path and seg functions
         path = self.im_path(sequence, t)
         im = sitk.ReadImage(str(repo_path) + '/' + path[0])
         return im
+    def label(self, receptor: str):
+        """get label of the patient
+
+        Args:
+            receptor (str): 'ER', 'PR' or 'HER2'
+
+        Returns:
+            int: label of the patient
+        """
+        label = getattr(self.meta, receptor)
+        return label.values[0]

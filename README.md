@@ -1,5 +1,5 @@
 # Added value of feature uncertainty in the radiomic analysis of Contrast-Enhanced Digital Mammography images
-This project aims to Assessment of feature uncertainty in CADx systems performance for breast immunohistochemical classification
+This project aims to assess the effect of feature uncertainty in CADx systems performance for breast immunohistochemical classification
 
 ## Goal
 The purpose of this investigation is to show that the assessment of radiomic features (RF) uncertainty
