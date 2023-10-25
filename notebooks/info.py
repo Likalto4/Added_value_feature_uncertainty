@@ -1,11 +1,13 @@
+from pathlib import Path
+import os, sys
+repo_path= Path.cwd().resolve()
+while '.gitignore' not in os.listdir(repo_path): # while not in the root of the repo
+    repo_path = repo_path.parent #go up one level
+sys.path.insert(0,str(repo_path)) if str(repo_path) not in sys.path else None
+
 import cv2 as cv
 import SimpleITK as sitk
-from pathlib import Path
 import pandas as pd
-
-subnotebooks = Path.cwd()
-notebooks_path = subnotebooks.parent
-repo_path = notebooks_path.parent
 
 class path_label():
     """Class to access general info (paths and labels) from csv of ALL PATIENTS
