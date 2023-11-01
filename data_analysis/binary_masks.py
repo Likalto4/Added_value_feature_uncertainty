@@ -23,6 +23,9 @@ def create_binary_mask(seg_sitk:sitk.Image, im_sitk:sitk.Image):
     # define images origin
     im_origin = (int(im_sitk.GetOrigin()[0]), int(im_sitk.GetOrigin()[1]))
     seg_origin = (int(seg_sitk.GetOrigin()[0]), int(seg_sitk.GetOrigin()[1]))
+    # print alert if seg_origin is not in the image (negative values)
+    if seg_origin[0] <= 0 or seg_origin[1] <= 0:
+        print(f'Warning: the segmentation origin is negative or very close ({seg_origin})')
     # remove last dimension
     seg_array = sitk.GetArrayFromImage(seg_sitk)
     seg_array = seg_array[0] # remove z dimension
