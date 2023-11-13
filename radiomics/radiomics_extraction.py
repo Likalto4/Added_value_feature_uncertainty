@@ -100,6 +100,27 @@ def main():
 
             # save features
             df_all.to_csv(features_dir / f'features_{rad}_{time}.csv')
+    
+    # create mean feature vector
+    # get all csv files in the directory
+    all_df = None
+    for rad in ['L', 'M', 'V']:
+        for time in ['1', '2']:
+            ind_path = features_dir / f'features_{rad}_{time}.csv'
+            # if the file does not exist, skip
+            if not ind_path.exists():
+                print(f'{ind_path} does not exist')
+                continue
+            df = pd.read_csv(ind_path)
+            # add col;umn with the string of the file name
+            df['file'] = rad + time
+            # concat to the main df
+            all_df = pd.concat([all_df, df], axis=0) if all_df is not None else df
+
+    # all_df averaged by pat_num
+    feat_vector = all_df.groupby(by='pat_num', axis=0).mean(numeric_only=True)
+    # save as  csv
+    feat_vector.to_csv(repo_path / 'data/features/feat_vector.csv')
 
 if __name__ == '__main__':
     main()
