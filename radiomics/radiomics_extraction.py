@@ -62,7 +62,7 @@ def main():
     features_dir = repo_path / 'data/features/pure'
     features_dir.mkdir(parents=True, exist_ok=True)
 
-    param_path = repo_path / 'data/param_files/Param_64bin_all_radiomics.json' #path of parameter file
+    param_path = repo_path / 'data/param_files/Param_2D_sym.json' #path of parameter file
     extractor = extractor_settings(param_path, show=False)
 
     logger = radiomics.logging.getLogger('radiomics')
