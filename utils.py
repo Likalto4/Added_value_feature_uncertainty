@@ -60,10 +60,8 @@ class dataset_INCan():
         paths = getattr(self.meta, seg_name)
         return list(paths)
     
-
     def labels_list(self, receptor: str):
         """get labels of the patients
-_description_
         Args:
             receptor (str): 'ER', 'PR' or 'HER2'
 
@@ -103,9 +101,41 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
         im_sitk = sitk.ReadImage(str(im_path))
         if format =='sitk':
             return im_sitk
-        im_array = sitk.GetArrayFromImage(im_sitk)
-        if sequence == 'SET' and SET_corrected:
-            im_array = im_array.astype(np.int32)
-            im_array = (im_array - np.power(2,15)).astype(np.int16)
-        
-        return im_array
+        elif format =='np':
+            im_array = sitk.GetArrayFromImage(im_sitk)
+            if sequence == 'SET' and SET_corrected:
+                im_array = im_array.astype(np.int32)
+                im_array = (im_array - np.power(2,15)).astype(np.int16)
+            return im_array
+        else:
+            raise ValueError(f'format {format} not recognized. Choose between sitk and np')
+    
+    def get_seg(self, rad: str, time: int, stype: str='G', format:str = 'np'):
+        """get the segmentation array of the patient
+
+        Args:
+            rad (str): Lily, Vyanka or Martha
+            time (str): 1 or 2
+            stype (str): global or focal
+
+        Returns:
+            numpy array: segmentation array
+        """
+        seg_path = repo_path / self.seg_path(rad, time, stype)[0]
+        seg_sitk = sitk.ReadImage(str(seg_path))
+        if format =='sitk':
+            return seg_sitk
+        seg_array = sitk.GetArrayFromImage(seg_sitk)
+        return seg_array
+    
+    def get_label(self, receptor: str):
+        """get label of the patient
+
+        Args:
+            receptor (str): 'ER', 'PR' or 'HER2'
+
+        Returns:
+            int: label of the patient
+        """
+        label = getattr(self.meta, receptor)[0]
+        return label
