@@ -9,8 +9,8 @@ sys.path.insert(0,str(repo_path)) if str(repo_path) not in sys.path else None
 
 import radiomics
 from radiomics import featureextractor
-import pandas as pd
 import collections
+import pandas as pd
 from tqdm import tqdm
 from utils import dataset_INCan, patient
 
