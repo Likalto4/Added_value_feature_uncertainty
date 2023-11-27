@@ -10,9 +10,9 @@ sys.path.insert(0,str(repo_path)) if str(repo_path) not in sys.path else None
 import radiomics
 from radiomics import featureextractor
 import pandas as pd
-import SimpleITK as sitk
 import collections
 from tqdm import tqdm
+from utils import dataset_INCan, patient
 
 def extractor_settings(param_path:Path, show=False):
     """set extraction settings for pyradiomics from a parameter file
@@ -57,13 +57,10 @@ def features_df(result:collections.OrderedDict, id_num:str):
 
 def main():
     # settings
-    valid_patients = pd.read_csv(repo_path / 'data/valid_patients.csv', header=0, dtype=str)
-    image_dir = repo_path / 'data/images/SET'
-    features_dir = repo_path / 'data/features/pure'
-    features_dir.mkdir(parents=True, exist_ok=True)
-
+    dataset = dataset_INCan()
     param_path = repo_path / 'data/param_files/Param_2D_sym.json' #path of parameter file
     extractor = extractor_settings(param_path, show=False)
+    features_dir = repo_path / 'data/features/pure'
 
     logger = radiomics.logging.getLogger('radiomics')
     logger.setLevel(radiomics.logging.ERROR)
@@ -73,14 +70,12 @@ def main():
 
             df_all = pd.DataFrame()
 
-            count_bar = tqdm(valid_patients.iterrows(), total=valid_patients.shape[0], desc=f'Extracting {rad}_{time}')
-            for id_num in valid_patients['pat_num']:
-                # read image
-                im_path = image_dir / f'Pat_{id_num}_SET_SMC_to_CMC_1min.tif'
-                im_sitk = sitk.ReadImage(str(im_path))
-                # read segmentation
-                seg_path = repo_path / f'data/fixed_binary_masks/{rad}_{time}_seg/{id_num}_G_{rad}.seg.nrrd' 
-                seg_sitk = sitk.ReadImage(str(seg_path))
+            count_bar = tqdm(dataset.pat_num, total=dataset.len, desc=f'{rad}{time}')
+            for id_num in count_bar:
+                # read data
+                pat = patient(pat_num=id_num)
+                im_sitk = pat.get_im(sequence='SET', format='sitk')
+                seg_sitk = pat.get_seg(rad=rad, time=time, format='sitk')
 
                 #extract
                 result = extractor.execute(im_sitk, seg_sitk) # Extract features
@@ -90,7 +85,6 @@ def main():
 
                 # stack to df_all
                 df_all = pd.concat([df_all, df])
-                count_bar.update(1)
 
             count_bar.close()
 
