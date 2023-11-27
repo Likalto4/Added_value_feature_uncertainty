@@ -13,6 +13,7 @@ from tqdm import tqdm
 from IPython.display import clear_output
 from itertools import product
 import radiomics
+import cv2 as cv
 
 from utils import patient, dataset_INCan, extractor_settings, features_df
 
@@ -58,6 +59,26 @@ def points_in_circle(radius):
         if x**2 + y**2 <= radius**2:
             yield from set(((x, y), (x, -y), (-x, y), (-x, -y),))
 
+def translate_image(im:np.array, x_trans:int, y_trans:int):
+    """translate image given x and y translation
+
+    Args:
+        im (np.array): image to be translated
+        x_trans (int): x translation
+        y_trans (int): y translation
+
+    Returns:
+        np.array: translated image
+    """
+    #get height and width
+    height, width = im.shape[:2]
+    #create translation matrix
+    T = np.float32([[1, 0, x_trans], [0, 1, y_trans]])
+    #translate
+    img_translation = cv.warpAffine(im, T, (width, height))
+
+    return img_translation
+
 def main():
     # extraction settings
     param_path = repo_path / 'data/param_files/Param_2D_sym.json' #path of parameter file
@@ -69,6 +90,8 @@ def main():
     dataset = dataset_INCan()
     saving_dir = repo_path / 'data/budget/substractions'
     saving_dir.mkdir(exist_ok=True)
+    im_saving_dir = repo_path / 'data/images/substractions'
+    im_saving_dir.mkdir(exist_ok=True)
 
     #Get all point coordinates inside the circle
     coord_list = list(points_in_circle(radius=2))
@@ -92,7 +115,8 @@ def main():
                     # substract
                     fixed_array = sitk.GetArrayFromImage(fixedImage)
                     im_transformed_array = sitk.GetArrayFromImage(im_transformed)
-                    im_substraction = -(fixed_array.astype(np.int32) - im_transformed_array.astype(np.int32)).astype(np.int16)
+                    im_moved_array = translate_image(im_transformed_array, x_trans, y_trans)
+                    im_substraction = -(fixed_array.astype(np.int32) - im_moved_array.astype(np.int32)).astype(np.int16)
                     sitk_substraction = sitk.GetImageFromArray(im_substraction)
                     sitk_substraction.CopyInformation(fixedImage)
 
@@ -104,6 +128,11 @@ def main():
 
                     # stack to df_all
                     df_all = pd.concat([df_all, df])
+
+                    # save image
+                    saving_name = im_saving_dir / f'x{x_trans}-y{y_trans}_pat_{pat_num}.tif'
+                    if not saving_name.exists():
+                        sitk.WriteImage(sitk_substraction, str(saving_name))
                 # save
                 df_all.to_csv(saving_dir / f'x{x_trans}-y{y_trans}_{rad}_{time}.csv')
 
