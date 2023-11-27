@@ -100,6 +100,14 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
         im_path = repo_path / self.im_path(sequence, t)[0]
         im_sitk = sitk.ReadImage(str(im_path))
         if format =='sitk':
+            if sequence=='SET' and SET_corrected:
+                im_array = sitk.GetArrayFromImage(im_sitk)
+                im_array = im_array.astype(np.int32)
+                im_array = (im_array - np.power(2,15)).astype(np.int16)
+                im_sitk_corr = sitk.GetImageFromArray(im_array)
+                # copy info from original image
+                im_sitk_corr.CopyInformation(im_sitk)
+                return im_sitk_corr
             return im_sitk
         elif format =='np':
             im_array = sitk.GetArrayFromImage(im_sitk)

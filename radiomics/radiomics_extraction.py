@@ -60,7 +60,8 @@ def main():
     dataset = dataset_INCan()
     param_path = repo_path / 'data/param_files/Param_2D_sym.json' #path of parameter file
     extractor = extractor_settings(param_path, show=False)
-    features_dir = repo_path / 'data/features/pure'
+    features_dir = repo_path / 'data/features/pure_corrected'
+    features_dir.mkdir(parents=True, exist_ok=True)
 
     logger = radiomics.logging.getLogger('radiomics')
     logger.setLevel(radiomics.logging.ERROR)
@@ -74,7 +75,7 @@ def main():
             for id_num in count_bar:
                 # read data
                 pat = patient(pat_num=id_num)
-                im_sitk = pat.get_im(sequence='SET', format='sitk')
+                im_sitk = pat.get_im(sequence='SET', format='sitk', SET_corrected=True)
                 seg_sitk = pat.get_seg(rad=rad, time=time, format='sitk')
 
                 #extract
@@ -114,7 +115,7 @@ def main():
     # all_df averaged by pat_num
     feat_vector = all_df.groupby(by='pat_num', axis=0).mean(numeric_only=True)
     # save as  csv
-    feat_vector.to_csv(repo_path / 'data/features/feat_vector.csv')
+    feat_vector.to_csv(repo_path / 'data/features/feat_vector_corrected.csv')
 
 if __name__ == '__main__':
     main()
