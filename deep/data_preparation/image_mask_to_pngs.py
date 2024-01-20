@@ -77,7 +77,7 @@ def get_bbox_cedm(SET_array:np.array):
     SET_array_blackbg = SET_array.copy()
     SET_array_blackbg[SET_array_blackbg==SET_mode] = 0
     # also remove +-range the mode in one line
-    for i in range(7):
+    for i in range(7): # 7 is the standard value, for special cases 11 or 15 may work. Check final bbox
         SET_array_blackbg[(SET_array_blackbg==SET_mode+i) | (SET_array_blackbg==SET_mode-i)] = 0
 
     bbox, _ = get_normal_BBox(SET_array_blackbg)
@@ -94,6 +94,7 @@ def main():
 
     # loop on patients
     for pat_num in tqdm(dataset_info.pat_num):
+    # for pat_num in tqdm(['8']):
         patient_ex = patient(pat_num)
         # read SET image, left oriented and corrected
         SET_array = patient_ex.get_im(sequence='SET', format='np', SET_corrected=True, left_oriented=True)
