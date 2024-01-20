@@ -10,7 +10,7 @@ import pandas as pd
 import SimpleITK as sitk
 import numpy as np
 
-from radiomics import featureextractor
+# from radiomics import featureextractor
 import collections
 
 
@@ -86,11 +86,18 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
         """
         self.meta = dataset.meta.loc[[pat_num]]
         self.pat_num = pat_num
+        # laterality from path
+        if 'RCC' in self.im_path(sequence='SMC')[0]:
+            laterality = 'R'
+        elif 'LCC' in self.im_path(sequence='SMC')[0]:
+            laterality = 'L'
+        assert laterality in ['R','L'], 'laterality not defined'
+        self.laterality = laterality
     
     def __repr__(self) -> str:
         return f'patient object of number {self.pat_num}'
     
-    def get_im(self, sequence: str, t = 't1', format:str = 'np', SET_corrected: bool = True):
+    def get_im(self, sequence: str, t = 't1', format:str = 'np', SET_corrected: bool = True, left_oriented: bool = False):
         """get the image array of the patient
 
         Args:
@@ -117,6 +124,12 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
             if sequence == 'SET' and SET_corrected:
                 im_array = im_array.astype(np.int32)
                 im_array = (im_array - np.power(2,15)).astype(np.int16)
+            if left_oriented:
+                # FLIP
+                if self.laterality == 'R':
+                    # except for the first patient, which is already flipped
+                    if self.pat_num != '2':
+                        im_array = np.fliplr(im_array)
             return im_array
         else:
             raise ValueError(f'format {format} not recognized. Choose between sitk and np')
@@ -152,43 +165,43 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
         return label
 
 
-def extractor_settings(param_path:Path, show=False):
-    """set extraction settings for pyradiomics from a parameter file
+# def extractor_settings(param_path:Path, show=False):
+#     """set extraction settings for pyradiomics from a parameter file
 
-    Args:
-        param_path (Path or str): relative path of parameter file
-        show (bool, optional): if printing setting or not. Defaults to False.
+#     Args:
+#         param_path (Path or str): relative path of parameter file
+#         show (bool, optional): if printing setting or not. Defaults to False.
 
-    Returns:
-        obj: extractor of pyradiomics
-    """
-    extractor = featureextractor.RadiomicsFeatureExtractor(str(param_path))
-    if show:
-        print('Extraction parameters:\n\t', extractor.settings)
-        print('Enabled filters:\n\t', extractor.enabledImagetypes)
-        print('Enabled features:\n\t', extractor.enabledFeatures)
-    return extractor
+#     Returns:
+#         obj: extractor of pyradiomics
+#     """
+#     extractor = featureextractor.RadiomicsFeatureExtractor(str(param_path))
+#     if show:
+#         print('Extraction parameters:\n\t', extractor.settings)
+#         print('Enabled filters:\n\t', extractor.enabledImagetypes)
+#         print('Enabled features:\n\t', extractor.enabledFeatures)
+#     return extractor
 
-def features_df(result:collections.OrderedDict, id_num:str):
-    """given a result from pyradiomics, return a dataframe with the features
+# def features_df(result:collections.OrderedDict, id_num:str):
+#     """given a result from pyradiomics, return a dataframe with the features
 
-    Args:
-        result (collections.OrderedDict): output of extract of pyradiomics
-        id_num (str): id_number of the patient
+#     Args:
+#         result (collections.OrderedDict): output of extract of pyradiomics
+#         id_num (str): id_number of the patient
 
-    Returns:
-        df: pd.DataFrame with the features
-    """
-    # get features and store in dataframe
-    fv_len = 102 # number of features
-    column_names = list(result.keys())[-fv_len:]
-    column_names = [x.replace('original_','') for x in column_names] #remove original_ string
-    df = pd.DataFrame(columns=column_names)
-    # define index name
-    df.index.name = 'pat_num'
-    #add feature vector to df
-    feature_vector = list(result.values())[-fv_len:] #get feature vector
-    # set efature vector in corresponding index
-    df.loc[id_num] = feature_vector
+#     Returns:
+#         df: pd.DataFrame with the features
+#     """
+#     # get features and store in dataframe
+#     fv_len = 102 # number of features
+#     column_names = list(result.keys())[-fv_len:]
+#     column_names = [x.replace('original_','') for x in column_names] #remove original_ string
+#     df = pd.DataFrame(columns=column_names)
+#     # define index name
+#     df.index.name = 'pat_num'
+#     #add feature vector to df
+#     feature_vector = list(result.values())[-fv_len:] #get feature vector
+#     # set efature vector in corresponding index
+#     df.loc[id_num] = feature_vector
 
-    return df
+#     return df
