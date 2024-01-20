@@ -134,7 +134,7 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
         else:
             raise ValueError(f'format {format} not recognized. Choose between sitk and np')
     
-    def get_seg(self, rad: str, time: int, stype: str='G', format:str = 'np'):
+    def get_seg(self, rad: str, time: int, stype: str='G', format:str = 'np', left_oriented: bool = False):
         """get the segmentation array of the patient
 
         Args:
@@ -150,6 +150,12 @@ class patient(dataset_INCan): #inherit from path_label path and seg functions
         if format =='sitk':
             return seg_sitk
         seg_array = sitk.GetArrayFromImage(seg_sitk)
+        if left_oriented:
+            # FLIP
+            if self.laterality == 'R':
+                # except for the first patient, which is already flipped
+                if self.pat_num != '2':
+                    seg_array = np.fliplr(seg_array)
         return seg_array
     
     def get_label(self, receptor: str):
