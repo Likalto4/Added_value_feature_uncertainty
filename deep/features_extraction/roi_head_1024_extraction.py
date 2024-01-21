@@ -162,7 +162,8 @@ class DBT_extractor():
         Returns:
             np.array: 1024 features
         """
-        self.feature_name = 'features_1024' if self.feature_name != 'features_1024' else None
+        if self.feature_name != 'features_1024':
+            self.feature_name = 'features_1024' # update feature name
         # we make the bbox match the format of the backbone
         new_bbox_lesion = self.prepare_bbox(bbox_lesion, self.predictor, image_rgb)
 
@@ -231,23 +232,25 @@ def main():
     extractor = DBT_extractor(config_file, model_file, min_score)
 
     # define image and mask paths
-    rad = 'V'
-    time = 1
+    # rad = 'V'
+    # time = 1
+    for rad in ['V', 'M', 'L']:
+        for time in [1,2]:
+                    
+            for pat_num in tqdm(dataset_INCan().pat_num):
+                # read pngs
+                image_path = repo_path / 'data/deep/images' / f'Pat_{pat_num}_SET.png'
+                mask_path = repo_path / 'data/deep/G_masks' / f'Pat_{pat_num}_mask_{rad}_{time}.png'
+                image_rgb = cv.imread(str(image_path))
+                mask_array = cv.imread(str(mask_path), cv.IMREAD_GRAYSCALE)
 
-    for pat_num in tqdm(dataset_INCan().pat_num):
-        # read pngs
-        image_path = repo_path / 'data/deep/images' / f'Pat_{pat_num}_SET.png'
-        mask_path = repo_path / 'data/deep/G_masks' / f'Pat_{pat_num}_mask_{rad}_{time}.png'
-        image_rgb = cv.imread(str(image_path))
-        mask_array = cv.imread(str(mask_path), cv.IMREAD_GRAYSCALE)
-
-        # create bbox
-        bbox_lesion, _ = extractor.get_normal_BBox(mask_array)
-        # extract
-        features = extractor.extract_1024(image_rgb, bbox_lesion)
-        df = extractor.features_to_csv(features, pat_num)
-        extractor.update_main_df(df)
-    extractor.save_main_df(rad, time)
+                # create bbox
+                bbox_lesion, _ = extractor.get_normal_BBox(mask_array)
+                # extract
+                features = extractor.extract_1024(image_rgb, bbox_lesion)
+                df = extractor.features_to_csv(features, pat_num)
+                extractor.update_main_df(df)
+            extractor.save_main_df(rad, time)
 
 if __name__ == "__main__":
     main()
