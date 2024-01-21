@@ -192,7 +192,7 @@ class DBT_extractor():
         """
         range_f = features.shape[0]
         df = pd.DataFrame(features).T
-        df.insert(0, 'PatientID', f'Pat_{pat_num}')
+        df.insert(0, 'PatientID', pat_num)
         df.columns = ['PatientID'] + [i for i in range(1, range_f+1)]
 
         return df
