@@ -222,6 +222,8 @@ class DBT_extractor():
         self.main_df_path.parent.mkdir(parents=True, exist_ok=True)
         self.main_df.to_csv(self.main_df_path, index=False)
         print(f'Main dataframe saved to {self.main_df_path}')
+        # reset main_df
+        self.main_df = None
 
 def main():
 
