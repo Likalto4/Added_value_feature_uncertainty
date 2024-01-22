@@ -13,6 +13,7 @@ from utils import dataset_INCan, patient
 from scipy import stats
 import cv2 as cv
 from tqdm import tqdm
+import pandas as pd
 
 def prepare_array(array:np.array, min_val:int, max_val:int):
     """map array to the range 0-255, and clip values below min_val and above max_val
@@ -63,11 +64,12 @@ def get_normal_BBox (im_array:np.array):
     
     return (x,y,x+w,y+h), img2
 
-def get_bbox_cedm(SET_array:np.array):
+def get_bbox_cedm(SET_array:np.array, pat_num:int or str):
     """Given an SET image, returns the bounding box of the breast
 
     Args:
         SET_array (np.array): SET array in original format
+        pat_num (int or str): patient number
 
     Returns:
         tuple: bounding box coordinates
@@ -77,7 +79,8 @@ def get_bbox_cedm(SET_array:np.array):
     SET_array_blackbg = SET_array.copy()
     SET_array_blackbg[SET_array_blackbg==SET_mode] = 0
     # also remove +-range the mode in one line
-    for i in range(7): # 7 is the standard value, for special cases 11 or 15 may work. Check final bbox
+    elimination_range = 11 if pat_num in ['8', '38'] else 7
+    for i in range(elimination_range): # 7 is the standard value, for special cases 11 or 15 may work. Check final bbox
         SET_array_blackbg[(SET_array_blackbg==SET_mode+i) | (SET_array_blackbg==SET_mode-i)] = 0
 
     bbox, _ = get_normal_BBox(SET_array_blackbg)
@@ -92,6 +95,14 @@ def main():
     max_val = 232
     stype = 'G'
 
+    # dirs
+    image_dir = repo_path / 'data/deep'/ 'images'
+    image_dir.mkdir(parents=True, exist_ok=True)
+    bbox_dir = repo_path / 'data/deep'/ 'breast_bbox'
+    bbox_dir.mkdir(parents=True, exist_ok=True)
+
+    bboxes_df = None
+
     # loop on patients
     for pat_num in tqdm(dataset_info.pat_num):
     # for pat_num in tqdm(['8']):
@@ -101,15 +112,18 @@ def main():
         SET_array = prepare_array(SET_array, min_val, max_val) # to 8bits in range
 
         # get bbox
-        bbox = get_bbox_cedm(SET_array)
+        bbox = get_bbox_cedm(SET_array, pat_num)
 
         # CROP IMAGES and MASKS
         SET_array_cropped = SET_array[bbox[1]:bbox[3],bbox[0]:bbox[2]]
         # save image as png
         im_png = sitk.GetImageFromArray(SET_array_cropped)
-        image_dir = repo_path / 'data/deep'/ 'images'
-        image_dir.mkdir(parents=True, exist_ok=True)
         sitk.WriteImage(im_png, str(image_dir / f'Pat_{pat_num}_SET.png'))
+
+        # save bbox coordinates
+        df = pd.DataFrame(columns=['pat_num','x1','y1','x2','y2'])
+        df.loc[0] = [pat_num, bbox[0], bbox[1], bbox[2], bbox[3]]
+        bboxes_df = pd.concat([bboxes_df, df])
 
         for rad in ['L','M', 'V']:
             for time in ['1','2']:
@@ -122,7 +136,8 @@ def main():
                 mask_dir = repo_path / 'data/deep'/ f'{stype}_masks'
                 mask_dir.mkdir(parents=True, exist_ok=True)
                 sitk.WriteImage(im_png, str(mask_dir / f'Pat_{pat_num}_mask_{rad}_{time}.png'))
-
+    # save bboxes
+    bboxes_df.to_csv(str(bbox_dir / 'coords.csv'), index=False)
         
 if __name__ == "__main__":
     main()
