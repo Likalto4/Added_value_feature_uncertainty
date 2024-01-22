@@ -197,7 +197,7 @@ class DBT_extractor():
         """
         self.main_df = pd.concat([self.main_df, df], ignore_index=True)
 
-    def save_main_df(self, rad:str, time:str or int):
+    def save_main_df(self, rad:str, time:str or int, save_path:Path=None):
         """Save the main dataframe to a csv file
 
         Args:
@@ -209,7 +209,7 @@ class DBT_extractor():
         if len(self.main_df) < 33:
             print('WARNING: The main dataframe is not complete')
         
-        self.main_df_path = repo_path / f'data/deep/features/{self.feature_name}/{rad}_{time}_features.csv'
+        self.main_df_path = repo_path / f'data/deep/features/{self.feature_name}/{rad}_{time}_features.csv' if save_path is None else save_path
         # make sure parent exists
         self.main_df_path.parent.mkdir(parents=True, exist_ok=True)
         self.main_df.to_csv(self.main_df_path, index=False)
