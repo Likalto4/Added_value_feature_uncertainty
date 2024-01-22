@@ -11,7 +11,7 @@ import SimpleITK as sitk
 import numpy as np
 
 # from radiomics import featureextractor
-import collections
+# import collections
 
 
 class dataset_INCan():
