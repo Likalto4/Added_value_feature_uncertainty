@@ -216,3 +216,4 @@ class DBT_extractor():
         print(f'Main dataframe saved to {self.main_df_path}')
         # reset main_df
         self.main_df = None
+
