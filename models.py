@@ -233,10 +233,10 @@ class DBT_extractor():
         # reset main_df
         self.main_df = None
 
-# create predictor class
+# machine learning predictor class
 class predictor_machine():
-    def __init__(self, feature_type:str):
-        self.feature_type = feature_type
+    def __init__(self):
+        # self.feature_type = feature_type
         self.clf = None
         self.scaler = StandardScaler()
         self.cv = LeaveOneOut()
@@ -254,10 +254,11 @@ class predictor_machine():
         self.best_estimators = []
         self.loo_scaler = []
         # budget
-        if self.feature_type=='radiomics':
-            self.budget = pd.read_csv(repo_path / 'data/budget/budget_radiomics/budget_std.csv', index_col=0).mean(axis=0)
-        elif self.feature_type=='deep':
-            self.budget = pd.read_csv(repo_path / 'data/budget/budget_std.csv', index_col=0).mean(axis=0)
+        # if self.feature_type=='radiomics':
+        #     self.budget = pd.read_csv(repo_path / 'data/budget/budget_radiomics/budget_std.csv', index_col=0).mean(axis=0)
+        # elif self.feature_type=='deep':
+        #     self.budget = pd.read_csv(repo_path / 'data/budget/budget_std.csv', index_col=0).mean(axis=0)
+        self.budget = pd.read_csv(repo_path / 'data/budget/combined_budget/budget_std_combined.csv', index_col=0).mean(axis=0)
         self.testing_synthetic_units = 1000
         self.training_synthetic_units = 50
         self.testing_budget_scale = 1
