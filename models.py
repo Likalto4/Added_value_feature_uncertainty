@@ -253,11 +253,6 @@ class predictor_machine():
         self.true_labels = []
         self.best_estimators = []
         self.loo_scaler = []
-        # budget
-        # if self.feature_type=='radiomics':
-        #     self.budget = pd.read_csv(repo_path / 'data/budget/budget_radiomics/budget_std.csv', index_col=0).mean(axis=0)
-        # elif self.feature_type=='deep':
-        #     self.budget = pd.read_csv(repo_path / 'data/budget/budget_std.csv', index_col=0).mean(axis=0)
         self.budget = pd.read_csv(repo_path / 'data/budget/combined_budget/budget_std_combined.csv', index_col=0).mean(axis=0)
         self.testing_synthetic_units = 1000
         self.training_synthetic_units = 50
@@ -579,3 +574,34 @@ class predictor_machine():
                 print(f'This means that the difference is not significant, and the robust method is not better than the traditional method.')
             else:
                 print(f'This means that the difference is significant, and the robust method is better than the traditional method.')
+
+    def box_plots_DeepComparison(self, pos_probabilities_trad:np.array, pos_probabilities_rob:np.array, pos_proba_DeepRob:np.array, ideal_auc:float):
+
+        # reorder the probabilities array, to be a 33x1000 array
+        pos_probabilities_trad = pos_probabilities_trad.reshape(-1,self.testing_synthetic_units)
+        pos_probabilities_rob = pos_probabilities_rob.reshape(-1,self.testing_synthetic_units)
+        pos_proba_DeepRob = pos_proba_DeepRob.reshape(-1,self.testing_synthetic_units)
+        true_labels = self.true_labels.reshape(-1,self.testing_synthetic_units)
+        
+        auc_trad = []
+        auc_rob = []
+        auc_DeepRob = []
+        for i in range(true_labels.shape[0]):
+            auc_trad.append(roc_auc_score(true_labels[:,i], pos_probabilities_trad[:,i]))
+            auc_rob.append(roc_auc_score(true_labels[:,i], pos_probabilities_rob[:,i]))
+            auc_DeepRob.append(roc_auc_score(true_labels[:,i], pos_proba_DeepRob[:,i]))
+        # list to array
+        auc_trad = np.asarray(auc_trad)
+        auc_rob = np.asarray(auc_rob)
+        auc_DeepRob = np.asarray(auc_DeepRob)
+
+        # plot boxplot
+        plt.figure()
+        plt.boxplot([auc_trad, auc_rob, auc_DeepRob], showmeans=True, meanline=True, showfliers=True)
+        plt.xticks([1,2,3], ['Traditional training', 'Robust training', 'Deep boosted robust training'])
+        plt.ylabel('AUC')
+        plt.title(f'AUC comparison for {self.receptor}')
+        # show in a point the ideal auc value
+        plt.scatter(1, ideal_auc , marker='o', color='black', label='Ideal AUC')
+        plt.legend()
+        plt.show()
