@@ -549,7 +549,7 @@ class predictor_machine():
 
         auc_trad = []
         auc_rob = []
-        for i in range(true_labels.shape[0]):
+        for i in range(true_labels.shape[1]):
             auc_trad.append(roc_auc_score(true_labels[:,i], pos_probabilities_trad[:,i]))
             auc_rob.append(roc_auc_score(true_labels[:,i], pos_probabilities_rob[:,i]))
         # list to array
@@ -586,10 +586,11 @@ class predictor_machine():
         auc_trad = []
         auc_rob = []
         auc_DeepRob = []
-        for i in range(true_labels.shape[0]):
+        for i in range(true_labels.shape[1]):
             auc_trad.append(roc_auc_score(true_labels[:,i], pos_probabilities_trad[:,i]))
             auc_rob.append(roc_auc_score(true_labels[:,i], pos_probabilities_rob[:,i]))
             auc_DeepRob.append(roc_auc_score(true_labels[:,i], pos_proba_DeepRob[:,i]))
+            print(i) if i==true_labels.shape[1]-1 else None
         # list to array
         auc_trad = np.asarray(auc_trad)
         auc_rob = np.asarray(auc_rob)
@@ -602,6 +603,6 @@ class predictor_machine():
         plt.ylabel('AUC')
         plt.title(f'AUC comparison for {self.receptor}')
         # show in a point the ideal auc value
-        plt.scatter(1, ideal_auc , marker='o', color='black', label='Ideal AUC')
+        plt.scatter(1, ideal_auc , marker='o', color='black', label='Ideal traditional AUC')
         plt.legend()
         plt.show()
