@@ -1,0 +1,4 @@
+pandas
+pyarrow
+opencv-python
+'git+https://github.com/facebookresearch/detectron2.git'
